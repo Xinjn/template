@@ -5,8 +5,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "./index.less";
-import Home from "./index.jsx";
+import "./App.less";
+import Home from "./index";
 
 class App extends React.Component {
   render() {
