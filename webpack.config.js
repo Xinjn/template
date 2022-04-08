@@ -22,7 +22,7 @@ var config = {
   module: {
     rules: [
       {
-        test: /\.less$/, // 匹配less文件
+        test: /\.css|less$/, // 匹配css/less文件
         use: [
           { loader: "style-loader" },
           { loader: "css-loader" },
@@ -42,6 +42,10 @@ var config = {
       template: "./src/index.html", //源文件
     }),
   ],
+  // 自动补全后缀名
+  resolve: {
+    extensions: [".js", ".jsx", ".json"],
+  },
 };
 
 module.exports = config;
