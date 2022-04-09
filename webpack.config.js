@@ -4,6 +4,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // 打包独立css文件
 // const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// px2rem 库
+const adaptive = require("postcss-adaptive-extra");
 
 // webpack 配置
 var config = {
@@ -37,6 +39,21 @@ var config = {
             },
           },
           { loader: "less-loader" },
+          // px2rem
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  adaptive({
+                    remUnit: 75,
+                    autoRem: true,
+                    useCssModules: true,
+                  }),
+                ],
+              },
+            },
+          },
         ],
       },
       // 打包独立css文件

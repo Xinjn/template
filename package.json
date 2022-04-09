@@ -23,6 +23,8 @@
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
     "mini-css-extract-plugin": "^2.6.0",
+    "postcss-adaptive-extra": "^1.0.5",
+    "postcss-loader": "^6.2.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "style-loader": "^3.3.1",
