@@ -1,3 +1,8 @@
+@value colors: "./colors.css";
+@value blue, red, green from colors;
+
 .wrap {
   border: 1px solid red;
+  color: red;
+  background-color: blue;
 }

@@ -2,6 +2,8 @@ const webpack = require("webpack");
 const path = require("path");
 // 生成Html插件
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+// 打包独立css文件
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 // webpack 配置
 var config = {
@@ -25,10 +27,23 @@ var config = {
         test: /\.css|less$/, // 匹配css/less文件
         use: [
           { loader: "style-loader" },
-          { loader: "css-loader" },
+          {
+            loader: "css-loader",
+            options: {
+              // 模块化配置
+              modules: {
+                localIdentName: "[path][name]__[local]--[hash:base64:5]", //编译后的css类名
+              },
+            },
+          },
           { loader: "less-loader" },
         ],
       },
+      // 打包独立css文件
+      // {
+      //   test: /\.css$/,
+      //   use: [MiniCssExtractPlugin.loader, "css-loader"],
+      // },
       {
         test: /\.js|jsx$/, // 匹配js文件
         exclude: /node_modules/, // 排除node_modules文件
@@ -41,6 +56,11 @@ var config = {
       title: "Hello React",
       template: "./src/index.html", //源文件
     }),
+    // 打包独立css文件
+    // new MiniCssExtractPlugin({
+    //   filename: "[name].css",
+    //   chunkFilename: "[id].css",
+    // }),
   ],
   // 自动补全后缀名
   resolve: {
