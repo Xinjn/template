@@ -3,7 +3,7 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-
+import "../src/common/resetMobile.css";
 // import "./App.less";
 import Home from "./index";
 

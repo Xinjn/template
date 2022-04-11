@@ -46,13 +46,21 @@ var config = {
               postcssOptions: {
                 plugins: [
                   adaptive({
-                    remUnit: 75,
+                    remUnit: 37.5,
                     autoRem: true,
                     useCssModules: true,
                   }),
                 ],
               },
             },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: "file-loader",
           },
         ],
       },
@@ -65,6 +73,14 @@ var config = {
         test: /\.js|jsx$/, // 匹配js文件
         exclude: /node_modules/, // 排除node_modules文件
         use: [{ loader: "babel-loader" }], // babel编译:es6语法
+      },
+      // 模版语法
+      {
+        test: /(\.html$)|(\.ejs$)|(\.handlebars$)|(\.hbs)/,
+        loader: "handlebars-loader",
+        // query: {
+        //   helperDirs: [path.join(__dirname, "./helpers")],
+        // },
       },
     ],
   },
