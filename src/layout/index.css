@@ -1,0 +1,6 @@
+/* @value colors: "./colors.css";
+@value blue, red, green from colors; */
+.wrap {
+  width: 100vw;
+  height: 100vh;
+}

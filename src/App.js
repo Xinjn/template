@@ -5,12 +5,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "../src/common/resetMobile.css";
 // import "./App.less";
-import Home from "./index";
+import Layout from "./layout";
 
-class App extends React.Component {
-  render() {
-    return <Home />;
-  }
-}
+// import Home from "./index";
 
-ReactDOM.render(<App />, document.getElementById("content"));
+// class App extends React.Component {
+//   render() {
+//     return <Home />;
+//   }
+// }
+
+ReactDOM.render(<Layout />, document.getElementById("root"));
