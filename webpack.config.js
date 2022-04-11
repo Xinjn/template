@@ -10,19 +10,22 @@ const adaptive = require("postcss-adaptive-extra");
 // webpack 配置
 var config = {
   mode: "development", // production development
-  // 项目的入口文件，webpack会从这个文件开始读取整个项目的依赖模块
+
+  // 入口文件：webpack会从这个文件开始读取整个项目的依赖模块
   // entry: ["./src/index.js"],
   // 设置实时更新
   entry: [
     "webpack/hot/dev-server",
     "webpack-dev-server/client?http://localhost:3000",
     "./src/app.js",
-  ], // 入口文件
-  // 打包输出文件
+  ],
+
+  // 输出文件
   output: {
     path: path.resolve(__dirname, "dist"), //自定义打包后的文件路径
     filename: "bundle.js", //自定义打包后的文件名称
   },
+
   module: {
     rules: [
       {
@@ -46,7 +49,7 @@ var config = {
               postcssOptions: {
                 plugins: [
                   adaptive({
-                    remUnit: 37.5,
+                    remUnit: 75,
                     autoRem: true,
                     useCssModules: true,
                   }),
@@ -81,6 +84,7 @@ var config = {
       },
     ],
   },
+
   plugins: [
     new HtmlWebpackPlugin({
       title: "Hello React",
@@ -92,6 +96,7 @@ var config = {
     //   chunkFilename: "[id].css",
     // }),
   ],
+
   // 自动补全后缀名
   resolve: {
     extensions: [".js", ".jsx", ".json"],
