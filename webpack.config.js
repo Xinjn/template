@@ -135,26 +135,27 @@ module.exports = group.map((item) => {
                 path.resolve(process.cwd(), './node_modules'),
                 path.resolve(process.cwd(), './node_modules/@ifeng/fepacker/node_modules'),
             ],
+            // 必填：指定路径别名
             alias: {
                 '@src': path.resolve(basePath, './src'),
                 '@': path.resolve(basePath),
-                //     Chip: !isEdit
-                //         ? '@ifeng/visualediting/src/components/ChipView'
-                //         : '@ifeng/visualediting/src/components/Chip',
-                //     // 可视化编辑组件，在展示模式下，只需要加载一个空组件，这样可以将可视化的业务代码放在内网。
-                //     ChipEdit: !isEdit
-                //         ? '@ifeng/visualediting/src/components/ChipEditView'
-                //         : '@ifeng/visualediting/src/components/ChipEdit',
-                //     // 数据转换组件。
-                //     chipDataTransform: !isEdit
-                //         ? '@ifeng/web-server/src/common/transformView.js'
-                //         : '@ifeng/web-server/src/common/transform.js',
-                //     ThreeTerminal_base: '@ifeng/three_terminal/es/base',
-                //     ThreeTerminal_mobile: '@ifeng/three_terminal/es/mobile',
-                //     ThreeTerminal_pc: '@ifeng/three_terminal/es/pc',
-                //     ThreeTerminal_mobile_dynamic: '@ifeng/three_terminal/es/mobile/dynamic',
-                //     ThreeTerminal_pc_dynamic: '@ifeng/three_terminal/es/pc/dynamic',
-                //     ThreeTerminal_utils: '@ifeng/three_terminal/es/utils',
+                Chip: !isEdit
+                    ? '@ifeng/visualediting/src/components/ChipView'
+                    : '@ifeng/visualediting/src/components/Chip',
+                // 可视化编辑组件，在展示模式下，只需要加载一个空组件，这样可以将可视化的业务代码放在内网。
+                ChipEdit: !isEdit
+                    ? '@ifeng/visualediting/src/components/ChipEditView'
+                    : '@ifeng/visualediting/src/components/ChipEdit',
+                // 数据转换组件。
+                chipDataTransform: !isEdit
+                    ? '@ifeng/web-server/src/common/transformView.js'
+                    : '@ifeng/web-server/src/common/transform.js',
+                ThreeTerminal_base: '@ifeng/three_terminal/es/base',
+                ThreeTerminal_mobile: '@ifeng/three_terminal/es/mobile',
+                ThreeTerminal_pc: '@ifeng/three_terminal/es/pc',
+                ThreeTerminal_mobile_dynamic: '@ifeng/three_terminal/es/mobile/dynamic',
+                ThreeTerminal_pc_dynamic: '@ifeng/three_terminal/es/pc/dynamic',
+                ThreeTerminal_utils: '@ifeng/three_terminal/es/utils',
             },
         },
         module: {

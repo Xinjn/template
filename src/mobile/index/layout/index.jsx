@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './index.css';
 import poster from "../../../assets/poster.png"
-import Header from '@src/Header/index';
+// import Header from '@src/Header/index';
+import Header from '../../../Header/index';
+
 
 const Layout = ({ content }) => {
     return (
