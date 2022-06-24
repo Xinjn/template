@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>启动页</title>
+    <script src="//x0.ifengimg.com/cmpp/43de08a2f850b836/2019/39/jQuery_3.4.1.js"></script>
+    <script src="https://x0.ifengimg.com/fe/custom/angular1.5.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://x0.ifengimg.com/fe/custom/2022_02_07/foundation.min.3fe4e06bab25.css">
+    <link rel="stylesheet" type="text/css" href="https://x0.ifengimg.com/fe/custom/2022_02_07/font-awesome.min.0831cba6a670.css">
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        @keyframes squeezeBody {
+            from {
+                width: 100%;
+            }
+
+            to {
+                width: calc(100% - 300px);
+            }
+        }
+
+        @-webkit-keyframes squeezeBody {
+            from {
+                width: 100%;
+            }
+
+            to {
+                width: calc(100% - 300px);
+            }
+        }
+
+        @keyframes stretchBody {
+            from {
+                width: calc(100% - 300px);
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @-webkit-keyframes stretchBody {
+            from {
+                width: calc(100% - 300px);
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Old Standard TT', serif;
+            font-weight: bold;
+        }
+
+        h3 {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .serif {
+            font-family: 'Old Standard TT', serif;
+        }
+
+        .top-bar {
+            height: 45px;
+            min-height: 45px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+        }
+
+        .bars-lnk {
+            color: #fff;
+        }
+
+        .bars-lnk i {
+            display: inline-block;
+            margin-left: 10px;
+            margin-top: 7px;
+        }
+
+        .bars-lnk img {
+            display: inline-block;
+            margin-left: 10px;
+            margin-top: -15px;
+            margin-right: 15px;
+            height: 35px;
+        }
+
+        .lateral-menu {
+            background-color: #333;
+            color: rgb(144, 144, 144);
+            width: 300px;
+            font-family: 'Open Sans', 'Myriad Pro', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Geneva, Verdana, sans-serif;
+        }
+
+        .lateral-menu label {
+            color: rgb(144, 144, 144);
+        }
+
+        .lateral-menu-content {
+            padding-left: 10px;
+            height: 100%;
+            font-size: 12px;
+            font-style: normal;
+            font-variant: normal;
+            font-weight: bold;
+            line-height: 16px;
+        }
+
+        .lateral-menu-content .title {
+            padding-top: 15px;
+            font-size: 2em;
+            height: 45px;
+        }
+
+        .lateral-menu-content-inner {
+            overflow-y: auto;
+            height: 100%;
+            padding-top: 10px;
+            padding-bottom: 50px;
+            padding-right: 10px;
+            font-size: 0.9em;
+        }
+
+
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: stretch;
+            width: 100%;
+            height: 100%;
+            padding-top: 65px;
+        }
+
+        .container>* {
+            display: block;
+            width: 50%;
+            margin-left: 10px;
+            margin-right: 10px;
+            max-height: 100%;
+        }
+
+        .container textarea {
+            resize: none;
+            font-family: Consolas, "Liberation Mono", Courier, monospace;
+            height: 97%;
+            max-height: 97%;
+            width: 45%;
+        }
+
+        #preview {
+            height: 97%;
+            max-height: 97%;
+            border: 1px solid #eee;
+            overflow-y: scroll;
+            width: 55%;
+            padding: 10px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            /* css-3 */
+            white-space: -moz-pre-wrap;
+            /* Mozilla, since 1999 */
+            white-space: -pre-wrap;
+            /* Opera 4-6 */
+            white-space: -o-pre-wrap;
+            /* Opera 7 */
+            word-wrap: break-word;
+            /* Internet Explorer 5.5+ */
+            background-color: #f8f8f8;
+            border: 1px solid #dfdfdf;
+            margin-top: 1.5em;
+            margin-bottom: 1.5em;
+            padding: 0.125rem 0.3125rem 0.0625rem;
+        }
+
+        pre code {
+            background-color: transparent;
+            border: 0;
+            padding: 0;
+        }
+
+
+        .modal-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            background-color: rgba(51, 51, 51, 0.5);
+        }
+
+        .modal-inner {
+            margin-top: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 600px;
+            height: 225px;
+            background-color: #fff;
+            opacity: 1;
+            z-index: 1000;
+        }
+
+        .modal-close-btn {
+            float: right;
+            display: inline-block;
+            margin-right: 5px;
+            color: #ff4336;
+        }
+
+        .modal-close-btn:hover {
+            float: right;
+            display: inline-block;
+            margin-right: 5px;
+            color: #8d0002;
+        }
+
+        .modal-topbar {
+            clear: both;
+            height: 25px;
+        }
+
+        .modal-inner .link-area {
+            margin: 10px;
+            height: 170px;
+
+        }
+
+        .modal-inner textarea {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .version {
+            color: white;
+            font-size: 0.8em !important;
+        }
+
+
+        body p {
+            margin: 0;
+        }
+
+        .versionTip {
+            height: 40px;
+            font-size: 12px;
+            background-color: #ffbdb2;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+        }
+
+        .versionTip button {
+            margin-left: 20px;
+            border-radius: 20px;
+            border: solid 1px #c5c5c5;
+            font-size: 12px;
+            padding: 4px 8px;
+            color: white;
+            background-color: #528f1a;
+            cursor: pointer;
+            width: 80px;
+            box-sizing: content-box;
+            transition: all .3s;
+        }
+
+        .versionTip button:hover {
+            background-color: #7bb942;
+        }
+
+        .main {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .pageList {
+            flex: 1;
+            padding: 0 20px;
+            border-right: 1px solid lightblue;
+        }
+
+        .pageList .pages {
+            font-size: 14px;
+        }
+
+        .pageList .pages p {
+            margin: 4px 0;
+        }
+
+        .pageList .pages p a {
+            font-size: 18px;
+            margin-left: 18px;
+            color: #3e88e7;
+        }
+
+        .tips {
+            /* width: 700px; */
+            border-top: 1px solid lightblue;
+            padding: 12px 0;
+        }
+
+        .create {
+            margin-top: 20px;
+            padding: 0 12px;
+        }
+
+        .create button {
+            width: 120px;
+            height: 32px;
+            background-color: #2972D4;
+            border: solid 1px gainsboro;
+            font-size: 14px;
+            color: #ededed;
+            cursor: pointer;
+            transition: all .3s;
+        }
+
+        .create button:hover {
+            background-color: #4a90ef;
+        }
+
+        .mt20 {
+            margin-top: 20px;
+        }
+
+        .tools {
+            width: 500px;
+            padding: 20px;
+        }
+
+        .tools input {
+            width: 80%;
+            height: 35px;
+            border: solid 1px gainsboro;
+            border-radius: 5px;
+            padding: 0 10px;
+            font-size: 15px;
+            transition: all .3s;
+        }
+
+        .tools pre {
+            padding: 0 10px;
+            font-size: 14px;
+        }
+
+        .tools .warn {
+            color: red;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    {{versionTip}}
+    <div class="main">
+        <div class="pageList">
+            <h2>pc页面 </h2>
+            <div class="pages">
+                {{pcList}}
+            </div>
+            <h2>mobile页面 </h2>
+            <div class="pages">
+                {{mobileList}}
+            </div>
+
+            <div class="tips mt20">
+                {{tips}}
+            </div>
+        </div>
+        <div class="tools" ng-app="myApp" ng-controller="routerCtrl">
+            <h2>路由命名工具</h2>
+            <input ng-model="model">
+            <p class="warn" ng-show="warn">路由格式错误：请参照 /mobile/xxx/xxx 或 /pc/xxx/xxx 的写法</p>
+            <pre>// config.js demo1
+module.exports = {
+    path: '{{model}}',
+}
+{{model3}}
+// 线上地址
+{{model2}}
+    </pre>
+
+            <h2>快捷入口</h2>
+            <a href="https://ucms.ifeng.com/platform/shankconf/shankconfApi/gitlab/groups/913" target="_blank">tag工具</a>
+            -
+            <a href="http://sys-manager.shank.ifeng.com/utils/kvtool/" target="_blank">allData生成工具</a> -
+            <a href="http://sys-manager.shank.ifeng.com/kvtools" target="_blank">kv工具</a> -
+            <a href="https://ucms.ifeng.com/platform/shankconf" target="_blank">custom项目管理</a> -
+            <a href="https://git.ifengidc.com/whale/web-pages-custom-react/pages" target="_blank">git地址</a> -
+            <a href="http://172.30.21.18:8181/admin.html" target="_blank">nohost</a> -
+            <a href="https://api.ifengcloud.ifeng.com/" target="_blank">yapi</a> -
+            <a href="https://git.ifengidc.com/whale/shankhost" target="_blank">测试dns</a>
+
+            <h2 style="margin-top: 20px">其他文档</h2>
+            <div><a href="http://sys-manager.shank.ifeng.com/doc/custom/pages/react/howToUse.html" target="_blank">如何在项目中使用碎片、评论、视频等功能？</a></div>
+        </div>
+
+    </div>
+    <!-- <div class="create">
+        <button onclick="createPC()">创建pc页面</button>
+        <button onclick="createMobile()">创建mobile页面</button>
+    </div> -->
+    <div style="position: fixed;right: 0px;bottom: 20px;width: 200px;background: lightblue;padding: 10px;">
+        <p style="text-align: center;border-bottom: 1px solid lightcyan;">当前运行环境</p>
+        <p>nodejs版本：{{node_version}}</p>
+        <p>npm版本：{{npm_version}}</p>
+    </div>
+
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('routerCtrl', function ($scope) {
+            $scope.model = '/mobile/news/aaa/bbb';
+            $scope.model3 = '';
+            $scope.model3show = false;
+            $scope.model2 = '';
+            $scope.warn = false;
+
+            $scope.$watch(function () {
+                $scope.model2 = '';
+                $scope.change()
+            })
+            $scope.change = function () {
+                let match = $scope.model.match(/^\/(pc|mobile)\/[\w\_\-\:]+/)
+                if (match && !$scope.model.includes('?')) {
+                    $scope.warn = false;
+                    let arr = $scope.model.split('/');
+                    arr.shift();
+                    arr.shift();
+                    let domainPrefix = arr.shift();
+                    let domain = domainPrefix.includes('.') ? domainPrefix : `${domainPrefix}.ifeng.com`;
+                    $scope.model2 = `https://${domain}/${arr.join('/')}`
+                    console.log(!domainPrefix.includes('.'))
+                    if(!domainPrefix.includes('.')) {
+                        let arr = $scope.model.split('/');
+                        arr[2] = domain
+                        $scope.model3 = `
+// config.js demo2
+// demo1 中 path 是 demo2 中 path 的简化版写法
+module.exports = {
+    path: '${arr.join('/')}',
+}
+`
+                        $scope.model3show = true;
+                    }else{
+                        $scope.model3 = ''
+                        $scope.model3show = false;
+                    }
+                    
+                } else {
+                    $scope.warn = true;
+                    $scope.model3 = ''
+                    $scope.model3show = false;
+                }
+                console.log( ' $scope.model3 :',$scope.model3 )
+
+            }
+        });
+
+        let timer = null
+        function openSplit (data) {
+            data = JSON.parse(data)
+            const split = window.open('https://sys-manager.shank.ifeng.com/utils/split/')
+            const isSplitEmpty = Object.keys(data.splitConfig).length === 0
+            timer = setInterval(() => {
+                split.postMessage({ type: 'custom', isSplitEmpty, data }, 'https://sys-manager.shank.ifeng.com/utils/split/')
+            }, 100)
+
+            window.addEventListener("message", function(event) {
+                switch (event.data.type) {
+                    case 'received': {
+                        clearInterval(timer)
+                        return
+                    }
+                    case 'finish': {
+                        $.ajax({
+                            url: '/splitUpdate',
+                            method: 'POST',
+                            data: JSON.stringify({
+                                splitData: event.data,
+                                customData: data,
+                                isSplitEmpty
+                            }),
+                            dataType: 'json',
+                            contentType: 'application/json;charset=utf-8'
+                        }).always(function (res) {
+                            if (res.responseText === 'success') {
+                                split.postMessage({ type: 'update_success' }, 'https://sys-manager.shank.ifeng.com/utils/split/')
+                            }
+                        })
+                        break
+                    }
+                    default: return;
+                }
+            }, false);
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>

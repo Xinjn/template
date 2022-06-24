@@ -16,7 +16,7 @@ const getLocalIdent = (loaderContext, localIdentName, localName) => generate(loc
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // px2rem 库
-const adaptive = require('postcss-adaptive-extra');
+const adaptive = require('@ifengbuild/postcss-adaptive-extra');
 const postImport = require('postcss-import');
 const nextcss = require('postcss-cssnext');
 const postExtend = require('postcss-extend');
@@ -53,16 +53,16 @@ let getGroup = require('./services/getGroup');
 let group = getGroup(env);
 
 // 测试环境和生产环境，打包必须注入 CI_BUILD_REF_NAME 和 GITLAB_USER_LOGIN 两个环境变量
-// if (!isDev && !process.env.hasOwnProperty("publicPath")) {
-//   if (!process.env.CI_BUILD_REF_NAME) {
-//     console.error("请注入环境变量：CI_BUILD_REF_NAME");
-//     process.exit(1);
-//   }
-//   if (!process.env.GITLAB_USER_LOGIN) {
-//     console.error("请注入环境变量：GITLAB_USER_LOGIN");
-//     process.exit(1);
-//   }
-// }
+if (!isDev && !process.env.hasOwnProperty('publicPath')) {
+    if (!process.env.CI_BUILD_REF_NAME) {
+        console.error('请注入环境变量：CI_BUILD_REF_NAME');
+        process.exit(1);
+    }
+    if (!process.env.GITLAB_USER_LOGIN) {
+        console.error('请注入环境变量：GITLAB_USER_LOGIN');
+        process.exit(1);
+    }
+}
 
 // 在cdn地址-添加分支信息
 let branch = '';
@@ -77,16 +77,17 @@ if (env === 'staging' && !process.env.hasOwnProperty('publicPath')) {
 esbuild();
 
 module.exports = group.map((item) => {
-    let { device, action, pxtorem, entrys, htmlPlugins, useBuiltIns, modules } = item;
+    let {
+        device,
+        action,
+        pxtorem,
+        entrys,
+        htmlPlugins, //注意：filename声明html文件名必须和template字段下文件名一致
+        useBuiltIns,
+        modules,
+    } = item;
     // 碎片
     let isEdit = action === 'edit';
-
-    // 重构htmlPlugins
-    const htmlPlugins2 = { ...htmlPlugins }[0]['userOptions'];
-
-    // console.log("------------------------------------------");
-    // console.log("entrys", entrys);
-    // console.log("------------------------------------------");
 
     return {
         // 禁用/启用缓存：cache 默认是写到 内存中的，写到文件会加快二次启动，如果要关闭 缓存，请设置 cache: false
@@ -107,25 +108,23 @@ module.exports = group.map((item) => {
         // 入口
         entry: entrys,
         // 输出
-        output: {
-            path: path.resolve(__dirname, 'dist'), //自定义打包后的文件路径
-            filename: 'bundle.js', //自定义打包后的文件名称
-        },
-        // output: _.pickBy(
-        //   {
-        //     path: path.resolve(basePath, "dist"),
-        //     filename: isDev ? "[name].js" : "[name].[chunkhash:10].js",
-        //     chunkFilename: isDev ? "[name].js" : "[name].[chunkhash:10].js",
-        //     // clean: true,
-        //     publicPath: process.env.hasOwnProperty("publicPath")
-        //       ? process.env.publicPath
-        //       : isDev
-        //       ? "/"
-        //       : `https://x2.ifengimg.com/fe/custom/${name}/${branch}`,
-        //     libraryTarget: action == "ssr" ? "umd" : undefined,
-        //   },
-        //   _.identity
-        // ),
+        // 输出文件
+
+        output: _.pickBy(
+            {
+                path: path.resolve(basePath, 'dist'),
+                filename: isDev ? '[name].js' : '[name].[chunkhash:10].js',
+                chunkFilename: isDev ? '[name].js' : '[name].[chunkhash:10].js',
+                // clean: true,
+                publicPath: process.env.hasOwnProperty('publicPath')
+                    ? process.env.publicPath
+                    : isDev
+                    ? '/'
+                    : `https://x2.ifengimg.com/fe/custom/${name}/${branch}`,
+                libraryTarget: action == 'ssr' ? 'umd' : undefined,
+            },
+            _.identity,
+        ),
         devtool: isDev ? 'cheap-module-source-map' : 'source-map',
         // 自动补全后缀名
         resolve: {
@@ -139,23 +138,23 @@ module.exports = group.map((item) => {
             alias: {
                 '@src': path.resolve(basePath, './src'),
                 '@': path.resolve(basePath),
-                Chip: !isEdit
-                    ? '@ifeng/visualediting/src/components/ChipView'
-                    : '@ifeng/visualediting/src/components/Chip',
-                // 可视化编辑组件，在展示模式下，只需要加载一个空组件，这样可以将可视化的业务代码放在内网。
-                ChipEdit: !isEdit
-                    ? '@ifeng/visualediting/src/components/ChipEditView'
-                    : '@ifeng/visualediting/src/components/ChipEdit',
-                // 数据转换组件。
-                chipDataTransform: !isEdit
-                    ? '@ifeng/web-server/src/common/transformView.js'
-                    : '@ifeng/web-server/src/common/transform.js',
-                ThreeTerminal_base: '@ifeng/three_terminal/es/base',
-                ThreeTerminal_mobile: '@ifeng/three_terminal/es/mobile',
-                ThreeTerminal_pc: '@ifeng/three_terminal/es/pc',
-                ThreeTerminal_mobile_dynamic: '@ifeng/three_terminal/es/mobile/dynamic',
-                ThreeTerminal_pc_dynamic: '@ifeng/three_terminal/es/pc/dynamic',
-                ThreeTerminal_utils: '@ifeng/three_terminal/es/utils',
+                //     Chip: !isEdit
+                //         ? '@ifeng/visualediting/src/components/ChipView'
+                //         : '@ifeng/visualediting/src/components/Chip',
+                //     // 可视化编辑组件，在展示模式下，只需要加载一个空组件，这样可以将可视化的业务代码放在内网。
+                //     ChipEdit: !isEdit
+                //         ? '@ifeng/visualediting/src/components/ChipEditView'
+                //         : '@ifeng/visualediting/src/components/ChipEdit',
+                //     // 数据转换组件。
+                //     chipDataTransform: !isEdit
+                //         ? '@ifeng/web-server/src/common/transformView.js'
+                //         : '@ifeng/web-server/src/common/transform.js',
+                //     ThreeTerminal_base: '@ifeng/three_terminal/es/base',
+                //     ThreeTerminal_mobile: '@ifeng/three_terminal/es/mobile',
+                //     ThreeTerminal_pc: '@ifeng/three_terminal/es/pc',
+                //     ThreeTerminal_mobile_dynamic: '@ifeng/three_terminal/es/mobile/dynamic',
+                //     ThreeTerminal_pc_dynamic: '@ifeng/three_terminal/es/pc/dynamic',
+                //     ThreeTerminal_utils: '@ifeng/three_terminal/es/utils',
             },
         },
         module: {
@@ -360,19 +359,12 @@ module.exports = group.map((item) => {
             ],
         },
         plugins: [
-            // isDev && new CaseSensitivePathsPlugin({}),
+            isDev && new CaseSensitivePathsPlugin({}),
             new webpack.DefinePlugin({
                 ...apiBase,
             }),
-
-            // ...htmlPlugins,
-            new HtmlWebpackPlugin({
-                template: htmlPlugins2['template'],
-                // chunks: htmlPlugins2["chunks"],
-                // filename: htmlPlugins2["filename"],
-                // inject: htmlPlugins2["inject"],
-                // config: htmlPlugins2['config'],
-            }),
+            // html启动服务
+            ...htmlPlugins,
 
             !isDev &&
                 new MiniCssExtractPlugin({

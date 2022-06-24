@@ -14,7 +14,7 @@ module.exports = (env) => {
     let allPages = getAllpages(env, useBuiltIns);
 
     let pageGroup = _.groupBy(allPages, (item) => `${item.device}_${item.action}_${item.pxtorem}`);
-
+    console.log('--------------pageGroup', pageGroup);
     let group = [];
 
     for (const key in pageGroup) {
@@ -35,7 +35,8 @@ module.exports = (env) => {
                 new HtmlWebpackPlugin({
                     template: item.htmlpath,
                     chunks: [item.trunkName],
-                    filename: env == 'development' ? `${item.trunkName}.html` : `${item.trunkName}.[contenthash].html`,
+                    // filename: env == 'development' ? `${item.trunkName}.html` : `${item.trunkName}.[contenthash].html`,
+                    filename: 'index.html',
                     inject: 'body',
                     config: {
                         isDev,
