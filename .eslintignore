@@ -1,0 +1,16 @@
+# /node_modules/* and /bower_components/* ignored by default
+
+# Ignore built files except build/index.js
+build/*
+bin/*
+devtmp/*
+dist/*
+tests/*
+webpackUtils/*
+uploadcdn.js
+webpack.config.js
+webpack.prod.config.js
+node_modules/*
+static/*
+config.js
+handler.js

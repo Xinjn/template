@@ -1,0 +1,15 @@
+.wrap {
+  position: fixed;
+  pointer-events: none;
+  inset: 0; /* 设置预览从鼠标计算 */
+}
+.item {
+  display: inline-block;
+  width: 80px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 2px;
+}

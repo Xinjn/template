@@ -1,0 +1,66 @@
+.container {
+    position: relative;
+    transform: translate(0);
+
+    & .partWp {
+        position: relative;
+
+        & .part {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            box-sizing: border-box;
+
+            &.show {
+                background-color: rgba(82, 222, 1, 0.38);
+                border: solid 1px rgba(82, 222, 1, 0.72);
+
+                & .tip {
+                    color: green;
+                }
+            }
+
+            &.hide {
+                background-color: rgba(128, 128, 128, 0.38);
+                border: solid 1px rgba(128, 128, 128, 0.72);
+
+                & .tip {
+                    color: gray;
+                }
+            }
+
+            & .tip {
+                position: absolute;
+                right: 60px;
+                bottom: 6px;
+                text-align: right;
+                font-size: 14px;
+                font-style: italic;
+                font-weight: bold;
+            }
+        }
+    }
+
+    & .toolbar {
+        position: absolute;
+        top: 0;
+        right: 60px;
+        width: 80px;
+        font-size: 14px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        outline: none;
+        border: 1px solid rgb(118, 171, 226);
+        height: 24px;
+        padding: 4px;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: rgba(219, 245, 255, 0.52);
+        box-shadow: rgba(111,172,224,0.38) 1px 1px 3px 0;
+        user-select: none;
+        z-index: 9999;
+    }
+}

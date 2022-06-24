@@ -1,31 +1,3 @@
-/**
- * 该reset参考了 normalize.css 和 typo.css
- * normalize.css: https://github.com/necolas/normalize.css/blob/master/normalize.css
- * typo.css: https://github.com/sofish/typo.css/blob/master/typo.css
- */
-
-/**
- * 1. 防止在iOS上横屏文字放大
- * 2. 防止用户自定义颜色对网页的影响
- * 3. 防止节点本身的滚动效果（例如 Android 炫光和下拉刷新）
- */
- html {
-    text-size-adjust: 100%; /* 1 */
-    background: #ffffff; /* 2 */
-    overscroll-behavior-y: none; /* 3 */
-}
-
-/**
-   * 1. 防止节点本身的滚动效果（例如 Android 炫光和下拉刷新）
-   */
-body {
-    overscroll-behavior-y: none; /* 1 */
-    /* 默认字体-ios："PingFang SC";andorid/window："Microsoft YaHei";Linux:"WenQuanYi Micro Hei" */
-    font-family: "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei",
-    "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
-}
-
-/* 内外边距通常让各个浏览器样式的表现位置不同 */
 body,
 div,
 dl,
@@ -50,125 +22,80 @@ textarea,
 p,
 blockquote,
 th,
-td,
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-menu,
-nav,
-section {
+td {
     margin: 0;
     padding: 0;
 }
-
-/* 修复表单元素不继承父级font的问题 */
-button,
-input,
-optgroup,
-select,
-textarea {
-    font-style: inherit;
-    font-weight: inherit;
-    font-stretch: inherit;
-    font-size: 100%;
-    line-height: inherit;
-    font-family: inherit;
+a {
+    text-decoration: none;
 }
-
-/* IE 中设置 overflow 为 visible ，和其它浏览器保持一致 */
-button,
-input {
-    overflow: visible;
-}
-
-/* 阻止 IE 中button和select继承父级的text-transform属性 */
-button {
-    text-transform: none;
-}
-
-/* 阻止IE9+上默认的纵向滚动条 */
-textarea {
-    overflow: auto;
-}
-
-/* 去掉各Table cell 的边距并让其边重合 */
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    font-size: inherit;
-}
-
-/* 去除默认边框 */
-fieldset,
-img {
-    border: 0;
-}
-
-/* 一致的 del 样式 */
-del {
-    text-decoration: line-through;
-}
-
-/* 去掉列表前的标识 */
-ol,
-ul {
+ul,
+ol {
+    margin: 0;
+    padding: 0;
     list-style: none;
 }
-
-/* 一致的粗体样式 */
-strong,
-b {
-    font-weight: bold;
-}
-
-/**
-     * 1. 默认不显示下划线，保持页面简洁
-     * 2. 移除IE10下a标签在active状态下的灰色背景
-     */
-a {
-    text-decoration: none; /* 1 */
-    background-color: transparent; /* 2 */
-}
-
-/* 消除img底部的留白 */
 img {
-    vertical-align: top;
+    vert-align: top;
 }
 
-/* 透明度设置为0，去掉点击链接和文本框对象时默认的灰色半透明覆盖层(iOS)或者虚框(Android) */
 a,
 input,
 button {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
-/* 取消chrome下默认的文本框聚焦样式 */
-input,
-textarea {
+/* //-webkit-tap-highlight-color:rgba(0,0,0,0);//透明度设置为0，去掉点击链接和文本框对象时默认的灰色半透明覆盖层(iOS)或者虚框(Android)  */
+input，textarea {
     outline: none;
 }
+/* //取消chrome下默认的文本框聚焦样式 */
 
-/* 去掉IOS原生控件样式 */
-/* input,
-  button {
+/* -webkit-appearance: none; */
+/* //消除输入框和按钮的原生外观，在iOS上加上这个属性才能给按钮和输入框自定义样式  */
+
+/* -webkit-user-select: none; */
+/* // 禁止页面文字选择 ，此属性不继承，一般加在body上规定整个body的文字都不会自动调整 */
+input,
+button {
     -webkit-appearance: none;
     border-radius: 0;
-  } */
+}
+/* 去掉IOS移除原生控件样式 */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-size: 100%;
+/* -webkit-touch-callout: none; */
+/* // 禁用长按页面时的弹出菜单 */
+
+body {
+    margin: 0;
+    /* user-select: none; */
+}
+/* //禁止移动端用户进行复制.选择. */
+
+body * {
+    font-family: 'miui', 'PingFangSC-Regular', 'Pingfang SC', 'Hiragino Sans GB', 'Noto Sans', 'Microsoft YaHei';
 }
 
-:global(#root) {
-    max-width: 812px; /*no*/
-    margin: 0 auto;
+html {
+    overscroll-behavior-y: none;
+}
+
+body {
+    text-size-adjust: 100%;
+}
+/* //移动端横竖屏字体乎大乎小 */
+
+/* -webkit-text-size-adjust: none; */
+/* //禁止文字自动调整大小(默认情况下旋转设备的时候文字大小会发生变化)，此属性也不继承，一般加在body上规定整个body的文字都不会自动调整 */
+
+:global {
+    & #root {
+        max-width: 1024px; /*no*/
+        margin: 0 auto;
+    }
+    & .article-edit-mode {
+        font-size: 37.5px !important; /*no*/
+        & #root {
+            margin: 0;
+        }
+    }
 }

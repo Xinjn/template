@@ -1,0 +1,23 @@
+.layout {
+}
+.layout > div {
+  margin-bottom: 5px;
+}
+.layoutHeader {
+  background: #edeff3;
+}
+.layoutPattern {
+}
+.layoutPatternItem {
+  padding: 0;
+}
+
+.layoutMargin {
+  display: flex;
+}
+.layoutPadding {
+  display: flex;
+}
+.layoutSize {
+  display: flex;
+}

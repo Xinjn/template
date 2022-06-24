@@ -1,0 +1,20 @@
+{{!-- 端内访问时拉起客户端页面 --}}
+<script>
+    (function(window){
+        window.__IFENG_GO_NATIVE__ = function (type, url) {
+            if (!window.grounds) return
+
+            if(navigator.userAgent.toLocaleLowerCase().indexOf('android') === -1){
+                if(window.grounds.closeNoAnimation) {
+                    window.grounds.closeNoAnimation();
+                } else {
+                    window.grounds.close();
+                }
+            } else {
+                window.grounds.close();
+            }
+
+            window.grounds.dispatch(type, url)
+        }
+    })(window)
+</script>

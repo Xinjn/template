@@ -1,1 +1,11 @@
 node_modules
+.vscode
+.idea
+.history
+.tmp
+.DS_Store
+.app.jsx
+.edit.jsx
+.ssr.jsx
+dist
+distssr

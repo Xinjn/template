@@ -1,0 +1,12 @@
+{{> common/uiImg }}
+
+{{#if htmlWebpackPlugin.options.config.tongji}}
+    {{#if htmlWebpackPlugin.options.config.isMobile}}
+    <%- mobileTongjiScript %>
+    {{/if}}
+
+    {{#unless htmlWebpackPlugin.options.config.isMobile}}
+    <%- pcTongjiScript %>
+    {{/unless}}
+{{/if}}
+

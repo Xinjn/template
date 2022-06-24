@@ -1,0 +1,186 @@
+<script>
+    var isGrounds = function () {
+        return typeof grounds !== 'undefined' && typeof grounds.getDeviceInfo === 'function';
+    }
+    var getGroundsWidth = function () {
+        var deviceInfo = grounds.getDeviceInfo();
+
+        if (deviceInfo && typeof deviceInfo.getScreen === 'function') {
+            var screen = deviceInfo.getScreen();
+            if(screen) {
+                return screen.split('x')[0] / window.devicePixelRatio;
+            }
+
+            if(window && window.location && window.location.href) {
+                var match = window.location.href.match(/\?.*?screen=(\d+x\d+)/);
+                if(match) {
+                    return match[1].split('x')[0] / window.devicePixelRatio;
+                }
+            }
+        }
+        return window.innerWidth;
+    }
+    var getWidth = function () {
+        var width = 320;
+        if (isGrounds()) {
+            width =  getGroundsWidth();
+        } else {
+            width = window.innerWidth;
+        }
+        return width > 0 ? width : 320;
+    }
+    var isWeixin = function() {
+        //判断是否是微信
+        var ua = navigator.userAgent.toLowerCase();
+        return ua.match(/MicroMessenger/i) == 'micromessenger';
+    };
+
+    function getBigFont() {
+        var docEl = document.documentElement;
+        // var docWidth = window.innerWidth;
+        var docWidth = getWidth();
+        var fakeBody = document.createElement('body');
+
+        var rem = docWidth / 10;
+        docEl.style.fontSize = rem + 'px';
+        var d = document.createElement('div');
+        d.style.cssText =
+            'width:1rem;height:0;overflow: hidden;position:absolute;z-index:-1;visibility: hidden;';
+        fakeBody.appendChild(d);
+        docEl.appendChild(fakeBody);
+        // var realRem = (window.getComputedStyle(d, null).width.split('px')[0]/1).toFixed(1)/1;
+        var realRem = isGrounds() ?  getGroundsWidth() / 10 : d.getBoundingClientRect().width.toFixed(1) / 1;
+        // var realRem = d.offsetWidth;
+        docEl.removeChild(fakeBody);
+        docEl.style.cssText = '';
+        console.log(realRem, rem);
+        // alert(realRem + ':' + rem + ':' + realRem/rem);
+        return {
+            realRem: realRem,
+            rem: rem
+        };
+        // alert(realRem + ':' + rem);
+    }
+    var __fontDiff = getBigFont();
+</script>
+
+<script>
+    (function() {
+        if (typeof WeixinJSBridge == 'object' && typeof WeixinJSBridge.invoke == 'function') {
+            handleFontSize();
+        } else {
+            document.addEventListener('WeixinJSBridgeReady', handleFontSize, false);
+        }
+        function handleFontSize() {
+            // var docEl = doc.documentElement;
+            // var docWidth = docEl.clientWidth;
+            var docWidth = getWidth();
+            var rem = docWidth / 10;
+            // 按照iphone X的高度定制最大宽度
+            if (docWidth >= window.__IFENG_ENV__.maxDocWidth) {
+                rem = window.__IFENG_ENV__.maxDocWidth / 10;
+            }
+
+            // 设置网页字体为默认大小
+            WeixinJSBridge.invoke('setFontSizeCallback', { fontSize: 0 });
+            setTimeout(function() {
+                document.documentElement.style.fontSize = rem + 'px';
+            }, 0);
+            // 重写设置网页字体大小的事件
+            WeixinJSBridge.on('menu:setfont', function() {
+                WeixinJSBridge.invoke('setFontSizeCallback', { fontSize: 0 });
+                setTimeout(function() {
+                    document.documentElement.style.fontSize = rem + 'px';
+                }, 0);
+            });
+        }
+    })();
+</script>
+
+<script>
+        (function(win, doc) {
+            var docEl = doc.documentElement;
+
+            function setRemUnit() {
+                console.log('runSetRemUnit');
+                console.log('docEl.clientWidth=======>', docEl.clientWidth);
+                // var docWidth = docEl.clientWidth;
+                var docWidth = getWidth();
+                var rem = docWidth / 10;
+                // 按照iphone X的高度定制最大宽度
+                if (docWidth >= window.__IFENG_ENV__.maxDocWidth) {
+                    rem = window.__IFENG_ENV__.maxDocWidth / 10;
+                }
+                if (typeof __articleEditMode__ !== 'undefined' && __articleEditMode__) {
+                    docEl.classList.add('article-edit-mode');
+                } else {
+                    if (__fontDiff.realRem !== __fontDiff.rem) {
+                        // docEl.style.cssText = 'font-size: ' + rem + 'px !important';
+                        // docEl.style.cssText = 'font-size: 37.6px !important';
+                        docEl.style.cssText =
+                            'font-size: ' + rem / (__fontDiff.realRem / __fontDiff.rem) + 'px !important';
+                    } else {
+                        docEl.style.cssText = 'font-size: ' + rem + 'px';
+                    }
+                }
+            }
+
+            var resetRemUnit = null;
+
+            win.addEventListener(
+                'resize',
+                function() {
+                    clearTimeout(resetRemUnit);
+                    resetRemUnit = setTimeout(setRemUnit, 200);
+                },
+                false
+            );
+            win.addEventListener(
+                'pageshow',
+                function(e) {
+                    if (e.persisted) {
+                        clearTimeout(resetRemUnit);
+                        resetRemUnit = setTimeout(setRemUnit, 200);
+                    }
+                },
+                false
+            );
+
+            setRemUnit();
+
+            if (win.devicePixelRatio && win.devicePixelRatio >= 2) {
+                var testEl = doc.createElement('div');
+                var fakeBody = doc.createElement('body');
+
+                testEl.style.border = '0.5px solid transparent';
+                fakeBody.appendChild(testEl);
+                docEl.appendChild(fakeBody);
+
+                if (testEl.offsetHeight === 1) {
+                    docEl.classList.add('hairlines');
+                }
+
+                docEl.removeChild(fakeBody);
+            }
+
+            if (doc.readyState === 'complete') {
+                if (__fontDiff.realRem !== __fontDiff.rem) {
+                    doc.body.style.fontSize = 12 / (__fontDiff.realRem / __fontDiff.rem) + 'px';
+                } else {
+                    doc.body.style.fontSize = 12 + 'px';
+                }
+            } else {
+                doc.addEventListener(
+                    'DOMContentLoaded',
+                    function(e) {
+                        if (__fontDiff.realRem !== __fontDiff.rem) {
+                            doc.body.style.fontSize = 12 / (__fontDiff.realRem / __fontDiff.rem) + 'px';
+                        } else {
+                            doc.body.style.fontSize = 12 + 'px';
+                        }
+                    },
+                    false
+                );
+            }
+        })(window, document);
+    </script>

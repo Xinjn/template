@@ -1,0 +1,31 @@
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta content="always" name="referrer">
+<link href="//y0.ifengimg.com/index/favicon.ico" mce_href="//y0.ifengimg.com/index/favicon.ico" rel="icon" type="image/x-icon">
+<link href="//y0.ifengimg.com/index/favicon.ico" mce_href="//y0.ifengimg.com/index/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link href="//y1.ifengimg.com/index/72x72_2520ifeng.png" rel="apple-touch-icon">
+
+{{#if htmlWebpackPlugin.options.config.isMobile}}
+<meta name=viewport content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<script>
+    window.__IFENG_ENV__ = window.__IFENG_ENV__ || {}
+    window.__IFENG_ENV__.maxDocWidth = parseInt({{maxDocWidth}}) || 812
+</script>
+{{/if}}
+
+{{#if htmlWebpackPlugin.options.config.isPxtorem}}
+{{> common/pxtorem }}
+{{/if}}
+
+{{#if htmlWebpackPlugin.options.config.isEdit}}
+<script>
+    window.__IFENG_EDIT_MODE_ = true;
+</script>
+{{/if}}
+
+{{#unless htmlWebpackPlugin.options.config.isDev}}
+{{> common/errorUpload }}
+{{/unless}}
+
+{{> common/allData }}
+
