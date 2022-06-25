@@ -5,7 +5,7 @@
   "private": true,
   "main": "index.js",
   "bin": {
-    "fepacker": "bin/run.js"
+    "fepacker": "./bin/run.js"
   },
   "scripts": {
     "start": "webpack-dev-server --mode=development --port 3000 --hot",
@@ -29,7 +29,6 @@
     "@babel/preset-env": "^7.16.0",
     "@babel/preset-react": "^7.16.0",
     "@babel/runtime-corejs3": "^7.17.9",
-    "@ifengbuild/postcss-adaptive-extra": "^1.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
     "babel-loader": "^8.2.3",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -60,6 +59,7 @@
     "mini-css-extract-plugin": "2.5.0",
     "portscanner": "^2.2.0",
     "postcss": "^8.3.11",
+    "postcss-adaptive-extra": "^1.0.5",
     "postcss-aspect-ratio-mini": "^1.1.0",
     "postcss-cssnext": "^3.1.1",
     "postcss-extend": "^1.0.5",
@@ -76,6 +76,7 @@
     "request": "^2.88.2",
     "shelljs": "^0.8.4",
     "showdown": "^2.0.3",
+    "sockjs": "^0.3.24",
     "stealthy-require": "^1.1.1",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.2.5",
@@ -87,7 +88,6 @@
     "yargs": "^17.2.1"
   },
   "deprecated": false,
-  "devDependencies": {},
   "keywords": [],
   "author": "xinjn",
   "license": "ISC",

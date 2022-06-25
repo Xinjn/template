@@ -1,15 +1,3 @@
-## 安装
-
-npm install
-
-## 启动项目
-
-npm start 或 npm run dev
-
-## node 版本
-
-请使用 node 14 开发
-
 ## 文档说明
 
 ### 环境说明

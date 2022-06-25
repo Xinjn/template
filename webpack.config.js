@@ -16,7 +16,8 @@ const getLocalIdent = (loaderContext, localIdentName, localName) => generate(loc
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // px2rem 库
-const adaptive = require('@ifengbuild/postcss-adaptive-extra');
+// const adaptive = require('@ifengbuild/postcss-adaptive-extra');
+const adaptive = require('postcss-adaptive-extra');
 const postImport = require('postcss-import');
 const nextcss = require('postcss-cssnext');
 const postExtend = require('postcss-extend');
@@ -37,32 +38,36 @@ const {
     webpack: { definePlugin, hbsDir = [] },
 } = (package_json = require(path.join(basePath, './package.json')));
 
+// 重要!!
+process.env.NODE_ENV = 'development';
+
 // 声明开发环境
 const env = process.env.NODE_ENV || 'development';
 const isProd = process.env.NODE_ENV == 'production';
 const isDev = process.env.NODE_ENV == 'development';
+console.log('isDev', isDev);
 const { esbuild } = require('./esbuild.config');
 
 let apiBase = definePlugin[env];
 for (const key in apiBase) {
     apiBase[key] = JSON.stringify(apiBase[key]);
 }
-
+console.log('basePath:', basePath);
 // PC/mobile配置数据
 let getGroup = require('./services/getGroup');
 let group = getGroup(env);
 
 // 测试环境和生产环境，打包必须注入 CI_BUILD_REF_NAME 和 GITLAB_USER_LOGIN 两个环境变量
-if (!isDev && !process.env.hasOwnProperty('publicPath')) {
-    if (!process.env.CI_BUILD_REF_NAME) {
-        console.error('请注入环境变量：CI_BUILD_REF_NAME');
-        process.exit(1);
-    }
-    if (!process.env.GITLAB_USER_LOGIN) {
-        console.error('请注入环境变量：GITLAB_USER_LOGIN');
-        process.exit(1);
-    }
-}
+// if (!isDev && !process.env.hasOwnProperty('publicPath')) {
+//     if (!process.env.CI_BUILD_REF_NAME) {
+//         console.error('请注入环境变量：CI_BUILD_REF_NAME');
+//         process.exit(1);
+//     }
+//     if (!process.env.GITLAB_USER_LOGIN) {
+//         console.error('请注入环境变量：GITLAB_USER_LOGIN');
+//         process.exit(1);
+//     }
+// }
 
 // 在cdn地址-添加分支信息
 let branch = '';
@@ -88,7 +93,11 @@ module.exports = group.map((item) => {
     } = item;
     // 碎片
     let isEdit = action === 'edit';
-
+    console.log('---------------------');
+    console.log('item', item);
+    console.log('htmlPlugins', item['htmlPlugins']);
+    console.log('userOptions', item['htmlPlugins'][0]['userOptions']);
+    console.log('---------------------');
     return {
         // 禁用/启用缓存：cache 默认是写到 内存中的，写到文件会加快二次启动，如果要关闭 缓存，请设置 cache: false
         cache: {
@@ -405,3 +414,5 @@ module.exports = group.map((item) => {
               },
     };
 });
+
+console.error('加载webpack.config');

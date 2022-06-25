@@ -19,6 +19,7 @@ module.exports = (env, useBuiltIns) => {
             }
             // 根据路径 获取chunkName。例如：mobile_index, pc_user
             let trunkName = configjsPath.replace('/config.js', '').split('/src/').pop().replace(/\//g, '_');
+
             // 获取页面配置
             let page_config = require(configjsPath);
             // 如果页面没有path，则跳过
@@ -55,8 +56,8 @@ module.exports = (env, useBuiltIns) => {
 
             if (env == 'development') {
                 // 开发环境 - 设置普通模式配置  -- 开始
-                // let appjsPath = configjsPath.replace("/config.js", "/.app.jsx");
-                let appjsPath = configjsPath.replace('/config.js', '/app.jsx');
+                let appjsPath = configjsPath.replace('/config.js', '/.app.jsx');
+                // let appjsPath = configjsPath.replace('/config.js', '/app.jsx');
                 config.action = 'default';
                 config.appjsPath = appjsPath;
                 config.entry[trunkName] = useBuiltIns == 'usage' ? appjsPath : ['core-js', appjsPath];
