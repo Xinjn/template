@@ -1,5 +1,5 @@
 module.exports = {
-    path: ['/mobile/news/loc/1111'], // String类型 或 Array类型
+    path: ['/mobile/news/loc/xxx'], // String类型 或 Array类型
     pxtorem: 75, // Boolean类型 或 Number类型：是否需要px2rem，如果想关闭pxtorem，请把该参数删掉 或者 改为false
     cdncache: 120, // Number类型：cdn缓存时间
     edit: false, // Boolean类型：是否开启可视化
