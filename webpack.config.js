@@ -38,7 +38,7 @@ const {
     webpack: { definePlugin, hbsDir = [] },
 } = (package_json = require(path.join(basePath, './package.json')));
 
-// 重要!!
+// 重要!! 后端注入
 process.env.NODE_ENV = 'development';
 
 // 声明开发环境
