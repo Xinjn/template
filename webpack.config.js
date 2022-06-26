@@ -348,6 +348,14 @@ module.exports = group.map((item) => {
                         ].filter(Boolean),
                     },
                 },
+
+                // 加载json文件
+                {
+                    test: /\.json$/,
+                    use: ['json-loader'],
+                    type: 'javascript/auto',
+                },
+
                 // 文件
                 {
                     test: /\.(eot|woff|woff2|ttf|svg|png|jpg|jpeg|gif)$/,
