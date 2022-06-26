@@ -1,6 +1,13 @@
 .header {
     width: 100%;
-    color: white;
-    background-color: #ee4747;
+    /* color: white; */
+    /* background-color: #ee4747; */
     font-size: 30px;
+}
+.logo {
+    border: 1px solid red;
+    width: 488px;
+    height: 34px;
+    background: url('./logo.png') no-repeat;
+    background-size: 488px 34px;
 }

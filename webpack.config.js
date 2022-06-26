@@ -261,8 +261,10 @@ module.exports = group.map((item) => {
                         {
                             loader: require.resolve(`css-loader`),
                             options: {
-                                // esModule: false,
-                                // importLoaders: 2,
+                                // 重要！：css中url不对，需要开启下两个属性
+                                // url: true,
+                                esModule: false,
+                                importLoaders: 2,
                                 modules: _.pickBy(
                                     {
                                         // localIdentName: isDev? '[path][name]_[local]' : '[local]-[hash:base64:8]',
